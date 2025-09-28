@@ -67,38 +67,112 @@ const AddressBook = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Address Book</h2>
-      {error && <div className="text-red-500 mb-2">{error}</div>}
-      <form onSubmit={handleSubmit} className="bg-white shadow rounded p-4 mb-6 space-y-2">
-        <div className="grid grid-cols-2 gap-2">
-          <input name="label" value={form.label} onChange={handleChange} placeholder="Label (Home, Work)" className="border p-2 rounded" required />
-          <input name="street" value={form.street} onChange={handleChange} placeholder="Street" className="border p-2 rounded" required />
-          <input name="city" value={form.city} onChange={handleChange} placeholder="City" className="border p-2 rounded" required />
-          <input name="state" value={form.state} onChange={handleChange} placeholder="State" className="border p-2 rounded" required />
-          <input name="postalCode" value={form.postalCode} onChange={handleChange} placeholder="Postal Code" className="border p-2 rounded" required />
-          <input name="country" value={form.country} onChange={handleChange} placeholder="Country" className="border p-2 rounded" required />
-        </div>
-        <div className="flex gap-2 mt-2">
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">{editingId ? 'Update' : 'Add'} Address</button>
-          {editingId && <button type="button" onClick={handleCancel} className="bg-gray-300 px-4 py-2 rounded">Cancel</button>}
-        </div>
-      </form>
-      <div className="space-y-4">
-        {addresses.map(addr => (
-          <div key={addr.id} className="bg-gray-50 p-4 rounded shadow flex justify-between items-center">
-            <div>
-              <div className="font-semibold">{addr.label}</div>
-              <div className="text-gray-700 text-sm">{addr.street}, {addr.city}, {addr.state}, {addr.postalCode}, {addr.country}</div>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={() => handleEdit(addr)} className="bg-yellow-400 px-3 py-1 rounded">Edit</button>
-              <button onClick={() => handleDelete(addr.id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="max-w-2xl mx-auto p-6">
+  <h2 className="text-3xl font-extrabold mb-6 text-gray-900">Address Book</h2>
+  {error && <div className="text-red-600 mb-4 font-semibold">{error}</div>}
+
+  <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-2xl p-6 mb-8 space-y-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <input
+        name="label"
+        value={form.label}
+        onChange={handleChange}
+        placeholder="Label (Home, Work)"
+        className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-900"
+        required
+      />
+      <input
+        name="street"
+        value={form.street}
+        onChange={handleChange}
+        placeholder="Street"
+        className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-900"
+        required
+      />
+      <input
+        name="city"
+        value={form.city}
+        onChange={handleChange}
+        placeholder="City"
+        className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-900"
+        required
+      />
+      <input
+        name="state"
+        value={form.state}
+        onChange={handleChange}
+        placeholder="State"
+        className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-900"
+        required
+      />
+      <input
+        name="postalCode"
+        value={form.postalCode}
+        onChange={handleChange}
+        placeholder="Postal Code"
+        className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-900"
+        required
+      />
+      <input
+        name="country"
+        value={form.country}
+        onChange={handleChange}
+        placeholder="Country"
+        className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-900"
+        required
+      />
     </div>
+
+    <div className="flex space-x-4">
+      <button
+        type="submit"
+        className="bg-indigo-600 text-white rounded-full px-6 py-3 font-semibold shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-4 focus:ring-indigo-400"
+      >
+        {editingId ? 'Update' : 'Add'} Address
+      </button>
+      {editingId && (
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="bg-gray-200 text-gray-700 rounded-full px-6 py-3 font-semibold shadow hover:bg-gray-300 transition focus:outline-none focus:ring-4 focus:ring-gray-300"
+        >
+          Cancel
+        </button>
+      )}
+    </div>
+  </form>
+
+  <div className="space-y-6">
+    {addresses.map(addr => (
+      <div
+        key={addr.id}
+        className="bg-white rounded-2xl shadow-md p-5 flex justify-between items-center"
+      >
+        <div>
+          <div className="font-semibold text-gray-900">{addr.label}</div>
+          <div className="text-gray-700 text-sm">
+            {addr.street}, {addr.city}, {addr.state}, {addr.postalCode}, {addr.country}
+          </div>
+        </div>
+        <div className="flex space-x-3">
+          <button
+            onClick={() => handleEdit(addr)}
+            className="bg-yellow-400 text-gray-900 px-5 py-2 rounded-full font-semibold shadow hover:bg-yellow-500 transition focus:outline-none focus:ring-4 focus:ring-yellow-300"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => handleDelete(addr.id)}
+            className="bg-red-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-red-700 transition focus:outline-none focus:ring-4 focus:ring-red-400"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
   );
 };
 

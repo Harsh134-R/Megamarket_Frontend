@@ -37,6 +37,7 @@ const Login = () => {
           <input
             type="email"
             name="email"
+            placeholder='Enter Valid Email'
             value={form.email}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded"
@@ -48,6 +49,7 @@ const Login = () => {
           <input
             type="password"
             name="password"
+            placeholder='Enter Valid Password'
             value={form.password}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded"
@@ -56,7 +58,13 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="
+    bg-gray-900 text-white px-5 py-3 rounded-md
+    transition duration-300 ease-in-out
+    hover:bg-gray-100 hover:text-gray-900 
+    hover:shadow-lg
+    focus:outline-none focus:ring-2 focus:ring-gray-400
+  "
         >
           Login
         </button>

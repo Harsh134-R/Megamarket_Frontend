@@ -11,32 +11,36 @@ const CheckoutForm = ({ clientSecret, amount, onPaymentSuccess, onPaymentError, 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-    setError('');
-    if (beforePayment) {
-      await beforePayment();
-    }
-    if (!stripe || !elements) {
-      setError('Stripe has not loaded yet.');
-      setLoading(false);
-      return;
-    }
-    const { error: stripeError } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/payment-success`,
-      },
-    });
-    if (stripeError) {
-      setError(stripeError.message);
-      onPaymentError?.(stripeError.message);
-    } else {
-      onPaymentSuccess?.();
-    }
+ const handleSubmit = async (event) => {
+  event.preventDefault();
+  setLoading(true);
+  setError('');
+  
+  if (beforePayment) {
+    await beforePayment();
+  }
+  
+  if (!stripe || !elements) {
+    setError('Stripe has not loaded yet.');
     setLoading(false);
-  };
+    return;
+  }
+  
+  const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
+    elements,
+    redirect: 'if_required',
+  });
+  
+  if (stripeError) {
+    setError(stripeError.message);
+    onPaymentError?.(stripeError.message);
+  } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+    onPaymentSuccess?.();
+  }
+  
+  setLoading(false);
+};
+
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

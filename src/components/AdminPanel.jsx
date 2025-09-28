@@ -128,7 +128,11 @@ const AdminPanel = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className=" bg-gray-900 text-white px-5 py-3 rounded-md
+    transition duration-300 ease-in-out
+    hover:bg-gray-100 hover:text-gray-900 
+    hover:shadow-lg
+    focus:outline-none focus:ring-2 focus:ring-gray-400"
           >
             Add Product
           </button>
@@ -213,49 +217,61 @@ const AdminPanel = () => {
       )}
 
       {/* Product List */}
-      <div>
-        <h3 className="text-xl font-semibold mb-2">Product List</h3>
-        {products.length === 0 ? (
-          <p>No products available</p>
-        ) : (
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="border p-2">ID</th>
-                <th className="border p-2">Name</th>
-                <th className="border p-2">Price</th>
-                <th className="border p-2">Category</th>
-                <th className="border p-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map(product => (
-                <tr key={product.id} className="border">
-                  <td className="border p-2">{product.id}</td>
-                  <td className="border p-2">{product.name}</td>
-                  <td className="border p-2">${product.price}</td>
-                  <td className="border p-2">{product.category}</td>
-                  <td className="border p-2">
-                    <button
-                      onClick={() => setEditProduct(product)}
-                      className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteProduct(product.id)}
-                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      <div className="p-4 bg-white rounded-lg shadow-md">
+  <h3 className="text-xl font-semibold mb-4">Product List</h3>
+  {products.length === 0 ? (
+    <p className="text-gray-500">No products available</p>
+  ) : (
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {products.map(product => (
+            <tr key={product.id} className="hover:bg-gray-50">
+              <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{product.id}</td>
+              <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">{product.name}</td>
+              <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">${product.price}</td>
+              <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{product.category}</td>
+              <td className="px-4 py-4 whitespace-nowrap text-sm flex items-center">
+                <button
+                  onClick={() => setEditProduct(product)}
+                  className="
+                    bg-teal-600 text-white px-3 py-1 rounded-md
+                    shadow-md transition duration-300 ease-in-out
+                    hover:bg-teal-700
+                    focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2
+                  "
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteProduct(product.id)}
+                  className="
+                    bg-gray-700 text-gray-100 px-3 py-1 rounded-md
+                    shadow-md transition duration-300 ease-in-out
+                    hover:bg-gray-800
+                    focus:outline-none focus:ring-2 focus:ring-slate-500
+                  "
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
+  )}
+</div>
+</div>
   );
 };
 

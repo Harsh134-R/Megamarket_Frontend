@@ -33,24 +33,47 @@ const ProductDetails = () => {
   if (!product) return <div>Loading...</div>;
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">{product.name}</h2>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <div className="flex flex-col md:flex-row gap-4">
-        <img src={product.image} alt={product.name} className="w-full md:w-1/2 h-64 object-contain bg-white border" style={{ display: 'block', background: '#fff' }} />
-        <div>
-          <p className="text-lg font-semibold">${product.price}</p>
-          <p className="text-gray-600 mb-2">{product.description}</p>
-          <p className="text-sm text-gray-500 mb-4">{product.category}</p>
-          <button
-            onClick={handleAddToCart}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Add to Cart
-          </button>
-        </div>
-      </div>
+   <div className="max-w-6xl mx-auto p-8 bg-[#F2F2F2] rounded-xl shadow-lg">
+  <h2 className="text-4xl font-semibold mb-8 text-gray-900">{product.name}</h2>
+  <div className="flex flex-col md:flex-row gap-10">
+    {/* Image Card */}
+    <div className="flex-1 bg-white rounded-xl shadow-md p-6 flex items-center justify-center">
+      <img
+        src={product.image}
+        alt={product.name}
+        className="max-h-96 object-contain"
+        loading="lazy"
+      />
     </div>
+
+    {/* Info & Action Section */}
+    <div className="flex-1 flex flex-col justify-between">
+      <div>
+        <p className="text-3xl font-bold text-gray-900 mb-4">${product.price}</p>
+        <p className="text-gray-700 mb-6 leading-relaxed">{product.description}</p>
+        <p className="text-sm uppercase text-gray-400 tracking-wide">{product.category}</p>
+      </div>
+
+      <button
+        onClick={handleAddToCart}
+        className="
+          mt-8
+       bg-gradient-to-r from-gray-900 to-gray-800 
+    text-white px-6 py-3 rounded-lg
+    shadow-lg
+    transition duration-300 ease-in-out
+    hover:from-gray-800 hover:to-gray-700
+    hover:shadow-xl
+    focus:outline-none focus:ring-4 focus:ring-gray-600
+        "
+      >
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>
+
+
   );
 };
 

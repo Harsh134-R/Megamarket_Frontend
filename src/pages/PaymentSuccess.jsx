@@ -16,7 +16,7 @@ const PaymentSuccess = () => {
       try {
         const pendingOrder = JSON.parse(localStorage.getItem('pendingOrder'));
         if (!pendingOrder) {
-          setError('Order details not found.');
+          // No pending order means direct flow was used - just show success
           setLoading(false);
           return;
         }
@@ -26,7 +26,6 @@ const PaymentSuccess = () => {
           paymentIntentId
         });
         localStorage.removeItem('pendingOrder');
-        // Optionally clear cart here if you want
         setLoading(false);
       } catch (err) {
         setError('Failed to create order after payment.');
@@ -34,10 +33,14 @@ const PaymentSuccess = () => {
       }
     };
 
-    if (paymentStatus === 'succeeded') {
+    // If redirect flow (has payment_intent), handle it
+    if (paymentIntentId && paymentStatus === 'succeeded') {
       createOrderAfterPayment();
-    } else {
+    } else if (paymentIntentId && paymentStatus !== 'succeeded') {
       navigate('/cart');
+    } else {
+      // Direct flow - just show success page
+      setLoading(false);
     }
   }, [searchParams, navigate]);
 
@@ -57,23 +60,23 @@ const PaymentSuccess = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 text-center">
-        <div className="text-green-500 text-6xl mb-4">✓</div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Payment Successful!</h2>
-        <p className="text-gray-600 mb-6">
+    <div className="container mx-auto p-6 flex justify-center">
+      <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 text-center">
+        <div className="text-green-600 text-7xl mb-6">✓</div>
+        <h2 className="text-3xl font-extrabold text-gray-900 mb-6">Payment Successful!</h2>
+        <p className="text-gray-700 mb-8 text-lg leading-relaxed">
           Thank you for your purchase. Your order has been placed successfully.
         </p>
-        <div className="space-y-3">
+        <div className="space-y-4">
           <button
             onClick={() => navigate('/orders')}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+            className="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:bg-indigo-700 transition focus:outline-none focus:ring-4 focus:ring-indigo-400"
           >
             View Orders
           </button>
           <button
             onClick={() => navigate('/products')}
-            className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded hover:bg-gray-300"
+            className="w-full bg-gray-200 text-gray-900 py-3 rounded-xl font-semibold shadow hover:bg-gray-300 transition focus:outline-none focus:ring-4 focus:ring-gray-300"
           >
             Continue Shopping
           </button>
@@ -83,4 +86,4 @@ const PaymentSuccess = () => {
   );
 };
 
-export default PaymentSuccess; 
+export default PaymentSuccess;
